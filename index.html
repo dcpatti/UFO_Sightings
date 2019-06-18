@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tinfoil Hat Club</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+<style>
+table {
+ 		 border-collapse: collapse;
+  		 width: 100%;
+}
+th, td {
+  			padding: 8px;
+  			text-align: left;
+ 			 border-bottom: 1px solid #ddd;
+}
+
+	tr:hover {background-color:#f5f5f5;}
+</style>
+</head>
+
+
+<body>
+
+  	<!--==========================
+  		Header
+ 	 ============================-->
+  <header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+      	  <a href="#hero"><img src="img/ufo_pic.png" alt="UFO Icon" /></img></a>
+      </div>
+  </header>
+
+  <!--==========================
+  	  Hero Section -- tied to the style sheet
+  ============================-->
+  <section id="hero">
+    <div class="hero-container">
+      <h1>UFO Sightings Lookup Tool</h1>
+      <h2>The truth is out there.</h2>
+
+
+      <h2>Browse all reports below, or enter terms to search.</h2>
+
+	  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Terms" title="Search"/>
+	  &nbsp;  &nbsp;  &nbsp;
+	  <select id="mySelect">
+	  		<option value="0" selected="selected">Date/Time</option>
+	 	 	<option value="1">City</option>
+	 		 <option value="2">State</option>
+	 		 <option value="3">Country</option>
+	 		 <option value="4">Shape</option>
+	  </select>
+
+	 	<script src = "js/searchbox.js"></script>
+
+    </div>
+  </section>
+
+  <main id="main">
+
+    <!--==========================
+      Table Section
+    ============================-->
+
+     <h2>Encounters Listing</h2>
+      <!-- here goes our data! -->
+	<div style="overflow-x:auto;">
+   	 <table class="table" id="myTable">
+
+
+                       <thead>
+                       <th><a onClick="sortTable(0)">Date/Time</a></th>
+                       <th><a onClick="sortTable(1)">City</a></th>
+                       <th><a onClick="sortTable(2)">State</a></th>
+                       <th><a onClick="sortTable(3)">Country</a></th>
+                       <th><a onClick="sortTable(4)">Shape</a></th>
+                       <th><a onClick="sortTable(5)">Duration</a></th>
+                       <th><a onClick="sortTable(6)">Comments</a></th>
+
+                       </thead>
+                       <tbody>
+
+					   <script src="static/js/data.js"></script>
+					   <script>
+					   function generateTableHead(table, data) {
+					     	let thead = table.createTHead();
+					     	let row = thead.insertRow();
+					     for (let key of data) {
+					      	 let th = document.createElement("th");
+					      	 let text = document.createTextNode(key);
+					      	 th.appendChild(text);
+					     	  row.appendChild(th);
+					     }
+					   }
+					   function generateTable(table, data) {
+					     for (let element of data) {
+					       let row = table.insertRow();
+					       for (key in element) {
+					         let cell = row.insertCell();
+					         let text = document.createTextNode(element[key]);
+					         cell.appendChild(text);
+					       }
+					     }
+					   }
+					   let table = document.querySelector("table");
+					   let ufodata = Object.keys(data[0]);
+					   // generateTableHead(table, ufodata);
+					   generateTable(table, data);
+
+</script>
+                     </tbody>
+                   </table>
+            </div>
+
+
+
+
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+
+      </div>
+    </div>
+
+
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+   <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+  function sortTable(elementNum) {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+
+    for (i = 1; i < (rows.length - 1); i++) {
+      		 shouldSwitch = false;
+      		 x = rows[i].getElementsByTagName("TD")[elementNum];
+      	 	y = rows[i + 1].getElementsByTagName("TD")[elementNum];
+       if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        	 shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+
+
+</body>
+</html>
